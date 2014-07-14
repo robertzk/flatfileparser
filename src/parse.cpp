@@ -20,21 +20,31 @@ void parse_flatfile(FlatFileBreaks breaks, char* filename) {
   std::ifstream mainfile(filename);
   std::ofstream outfile (strcat(filename, ".csv"));
 
+  int chars_per_line = 0;
+  for (FlatFileBreaks::iterator i = breaks.begin(); i != breaks.end(); i++)
+    chars_per_line += *i;
+
   char c;
   int char_count   = 0;
   int offset_count = 0;
+  int charsum = 0;
   while (mainfile.get(c)) {
     outfile << c;
-    if (c == '\n' || c == '\r') { offset_count = 0; char_count = 0; }
-    else {
-      char_count++;
-      if (offset_count > breaks.size()) {
-        std::cerr << "Line length too long.\n";
-        return; 
+    if (c == '\n' || c == '\r') {
+      if (offset_count != breaks.size()) {
+        std::cerr << offset_count << "Line length too short.\n" << breaks.size();
+        exit(1);
+      }
+      offset_count = char_count = charsum = 0;
+    } else {
+      char_count++; charsum++;
+      if (offset_count >= breaks.size()) {
+        std::cerr << offset_count << "Line length too long.\n" << breaks.size();
+        exit(1);
       }
 
       if (char_count == breaks[offset_count]) {
-        outfile << ",";
+        if (charsum != chars_per_line) outfile << ",";
         char_count = 0;
         offset_count++;
       }
