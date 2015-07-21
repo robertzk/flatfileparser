@@ -1,5 +1,7 @@
 #include "csv_iterator.h"
 #include "parse.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char** argv) {
 

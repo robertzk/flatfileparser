@@ -33,14 +33,14 @@ void parse_flatfile(FlatFileBreaks breaks, char* filename) {
     if (c == '\n' || c == '\r') {
       if (offset_count != breaks.size()) {
         std::cerr << offset_count << "Line length too short.\n" << breaks.size();
-        exit(1);
+	exit(1);
       }
       offset_count = char_count = charsum = 0;
     } else {
       char_count++; charsum++;
       if (offset_count >= breaks.size()) {
         std::cerr << offset_count << "Line length too long.\n" << breaks.size();
-        exit(1);
+	exit(1);
       }
 
       if (char_count == breaks[offset_count]) {
