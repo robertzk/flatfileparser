@@ -1,11 +1,13 @@
-C++ Utility for Parsing Flat files.
+C++ Utility for Helping Deena
+---------
 
-A C++ utility for parsing flat files given a header specification. Note this is still a work in
-progress and there are some hardcoded pieces.
+A C++ utility for subsetting down flat files relative to a substring.
 
 Usage
 -----
 
 ```
-flatfileparser <header_file_name> <flat_file_name>
+g++ src/main.cpp -o deenaparser
+./deenaparser <flat_files_name> <record_subset_ids> <output_file_name>
 ```
+
