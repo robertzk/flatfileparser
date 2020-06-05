@@ -7,5 +7,5 @@ OBJ = parse.o csv_iterator.o main.o
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 flatfileparser: $(OBJ)
-     $(CC) -o $@ $^ $(CFLAGS)
+	$(CC) -o $@ $^ $(CFLAGS)
 

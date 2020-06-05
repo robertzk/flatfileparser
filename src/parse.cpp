@@ -1,4 +1,6 @@
 #include "parse.h"
+#include <cstring>
+#include <cstdlib>
 
 FlatFileBreaks parse_header(char* filename) {
   std::ifstream file(filename);
@@ -18,7 +20,7 @@ FlatFileBreaks parse_header(char* filename) {
 
 void parse_flatfile(FlatFileBreaks breaks, char* filename) {
   std::ifstream mainfile(filename);
-  std::ofstream outfile (strcat(filename, ".csv"));
+  std::ofstream outfile(strcat(filename, ".csv"));
 
   int chars_per_line = 0;
   for (FlatFileBreaks::iterator i = breaks.begin(); i != breaks.end(); i++)
@@ -31,6 +33,7 @@ void parse_flatfile(FlatFileBreaks breaks, char* filename) {
   while (mainfile.get(c)) {
     outfile << c;
     if (c == '\n' || c == '\r') {
+      if (offset_count == 0) continue;
       if (offset_count != breaks.size()) {
         std::cerr << offset_count << "Line length too short.\n" << breaks.size();
 	exit(1);
